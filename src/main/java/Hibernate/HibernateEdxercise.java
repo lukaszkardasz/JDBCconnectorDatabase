@@ -1,0 +1,4 @@
+package Hibernate;
+
+class HibernateEdxercise {
+}
