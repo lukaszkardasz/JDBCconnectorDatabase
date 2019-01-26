@@ -1,16 +1,16 @@
-package Hibernate;
+package hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "uzytkownicy")
+
 class Uzytkownicy {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY )
+        @Column
         private int ID;
         @Column
         private String IMIE;
