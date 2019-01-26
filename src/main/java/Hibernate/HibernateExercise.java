@@ -16,5 +16,7 @@ class HibernateExercise {
         Uzytkownicy o = session1.find(Uzytkownicy.class, 5);
         session1.getTransaction().commit();
         session1.close();
+
+
     }
 }
