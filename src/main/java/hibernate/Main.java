@@ -4,7 +4,7 @@ import org.hibernate.Session;
 
 class Main {
     public static void main(String[] args) {
-        save();
+        addAndSave();
         find(5);
         update(7);
         //delete(16);
@@ -28,7 +28,7 @@ class Main {
         session3.beginTransaction();
         Uzytkownicy user = session3.find(Uzytkownicy.class, userId);
         user.setIMIE("NoweImie");
-        //session3.persist(user); //nie potrzebne w sumie
+        session3.persist(user); //nie potrzebne w sumie
         session3.getTransaction().commit();
         session3.close();
     }
@@ -42,7 +42,7 @@ class Main {
         session1.close();
     }
 
-    private static void save() {
+    private static void addAndSave() {
         Session session2 = SessionManager.getSessionFactory().openSession();
         session2.beginTransaction();
         Uzytkownicy user = new Uzytkownicy();
