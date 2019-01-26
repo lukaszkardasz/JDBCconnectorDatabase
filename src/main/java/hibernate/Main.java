@@ -28,7 +28,7 @@ class Main {
         session3.beginTransaction();
         Uzytkownicy user = session3.find(Uzytkownicy.class, userId);
         user.setIMIE("NoweImie");
-        session3.persist(user);
+        //session3.persist(user); //nie potrzebne w sumie
         session3.getTransaction().commit();
         session3.close();
     }
