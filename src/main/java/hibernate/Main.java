@@ -1,16 +1,40 @@
 package hibernate;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        addAndSave();
-        find(5);
-        update(7);
+        //addAndSave();
+        //find(5);
+        //update(7);
         //delete(16);
+        findAndShowByName();
+
+
 
         //zamykanie samoczynne aplikacji
         SessionManager.getSessionFactory().close();
+
+    }
+
+    private static void findAndShowByName() {
+
+        Session session5 = SessionManager.getSessionFactory().openSession();
+        session5.beginTransaction();
+        String hqlQuery = "select s from Uzytkownicy s where s.IMIE = :IMIE";
+        Query<Uzytkownicy> query = session5.createQuery(hqlQuery, Uzytkownicy.class);
+        query.setParameter("IMIE", "Zdzichu");
+        List<Uzytkownicy> list = query.list();
+
+        for(Uzytkownicy record : list){
+            System.out.println(record);
+        }
+
+        session5.getTransaction().commit();
+        session5.close();
 
     }
 
