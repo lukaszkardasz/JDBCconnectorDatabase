@@ -11,8 +11,9 @@ class Main {
         //find(5);
         //update(7);
         //delete(16);
-        findAndShowByName("Zdzichu");
-        findByNamedQuery("Wiesiek");
+        //findAndShowByName("Zdzichu");
+        //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
+        updateByName("Bodzio", "Janusz");
 
 
 
@@ -21,20 +22,39 @@ class Main {
 
     }
 
+    private static void updateByName(String name, String oldName) {
+        Session session = SessionManager.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hqlQuery = "update Uzytkownicy set IMIE = :newName where IMIE = :oldName";
+        Query<Uzytkownicy> query = session.createQuery(hqlQuery);
+        query.setParameter("newName", name);
+        query.setParameter("oldName", oldName);
+        System.out.println("Update " + oldName + " to " + name + " complete");
+        query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
     private static void findByNamedQuery(String name) {
         Session session = SessionManager.getSessionFactory().openSession();
         session.beginTransaction();
-        session.createNamedQuery("selectByName", Uzytkownicy.class);
+        Query<Uzytkownicy> query = session
+                .createNamedQuery("selectByName", Uzytkownicy.class);
+        query.setParameter("IMIE", name);
+        List<Uzytkownicy> list = query.list();
+        for(Uzytkownicy record : list){
+            System.out.println(record);
+        }
         session.getTransaction().commit();
         session.close();
     }
 
     private static void findAndShowByName(String name) {
 
-        Session session5 = SessionManager.getSessionFactory().openSession();
-        session5.beginTransaction();
+        Session session = SessionManager.getSessionFactory().openSession();
+        session.beginTransaction();
         String hqlQuery = "select s from Uzytkownicy s where s.IMIE = :IMIE";
-        Query<Uzytkownicy> query = session5.createQuery(hqlQuery, Uzytkownicy.class);
+        Query<Uzytkownicy> query = session.createQuery(hqlQuery, Uzytkownicy.class);
         query.setParameter("IMIE", name);
         List<Uzytkownicy> list = query.list();
 
@@ -42,8 +62,8 @@ class Main {
             System.out.println(record);
         }
 
-        session5.getTransaction().commit();
-        session5.close();
+        session.getTransaction().commit();
+        session.close();
 
     }
 
