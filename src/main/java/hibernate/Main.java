@@ -13,13 +13,23 @@ class Main {
         //delete(16);
         //findAndShowByName("Zdzichu");
         //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
-        updateByName("Bodzio", "Janusz");
-
+        //updateByName("Bodzio", "Janusz");
+        deleteQuery(15);
 
 
         //zamykanie samoczynne aplikacji
         SessionManager.getSessionFactory().close();
 
+    }
+
+    private static void deleteQuery(int idToDelete) {
+        Session session = SessionManager.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("delete Uzytkownicy where id in(:idsForDelete)");
+        query.setParameter("idsForDelete",idToDelete);
+        query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
     }
 
     private static void updateByName(String name, String oldName) {
