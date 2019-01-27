@@ -11,14 +11,14 @@ import java.util.List;
 class Main {
     public static void main(String[] args) {
         //addAndSave();
-        //find(5);
+        find(5);
         //update(7);
         //delete(16);
         //findAndShowByName("Zdzichu");
         //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
         //updateByName("Bodzio", "Janusz");
         //deleteQuery(15);
-        selectByCriteria();
+        //selectByCriteria();
 
 
         //zamykanie samoczynne aplikacji
