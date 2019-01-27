@@ -3,6 +3,9 @@ package hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 class Main {
@@ -14,7 +17,8 @@ class Main {
         //findAndShowByName("Zdzichu");
         //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
         //updateByName("Bodzio", "Janusz");
-        deleteQuery(15);
+        //deleteQuery(15);
+        selectByCriteria();
 
 
         //zamykanie samoczynne aplikacji
@@ -22,11 +26,32 @@ class Main {
 
     }
 
+    private static void selectByCriteria() {
+        Session session = SessionManager.getSessionFactory().openSession();
+        session.beginTransaction();
+    //select customerRoot
+    // from Customer customerRoot
+    //where customerRoot.name = Franek
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+    //typ zwracany
+        CriteriaQuery<Uzytkownicy> criteriaQuery = criteriaBuilder.createQuery(Uzytkownicy.class);
+    //inicjalizacja from
+        Root<Uzytkownicy> uzytkownicyRoot = criteriaQuery.from(Uzytkownicy.class);
+    //blok where
+        criteriaQuery.where(
+                criteriaBuilder.equal(uzytkownicyRoot.get("IMIE"),"Franek"));
+        Query<Uzytkownicy> query = session.createQuery(criteriaQuery);
+        List<Uzytkownicy> list = query.list();
+        System.out.println("Wyswietlam listę: " + list);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     private static void deleteQuery(int idToDelete) {
         Session session = SessionManager.getSessionFactory().openSession();
         session.beginTransaction();
         Query query = session.createQuery("delete Uzytkownicy where id in(:idsForDelete)");
-        query.setParameter("idsForDelete",idToDelete);
+        query.setParameter("idsForDelete", idToDelete);
         query.executeUpdate();
         session.getTransaction().commit();
         session.close();
@@ -52,7 +77,7 @@ class Main {
                 .createNamedQuery("selectByName", Uzytkownicy.class);
         query.setParameter("IMIE", name);
         List<Uzytkownicy> list = query.list();
-        for(Uzytkownicy record : list){
+        for (Uzytkownicy record : list) {
             System.out.println(record);
         }
         session.getTransaction().commit();
@@ -68,7 +93,7 @@ class Main {
         query.setParameter("IMIE", name);
         List<Uzytkownicy> list = query.list();
 
-        for(Uzytkownicy record : list){
+        for (Uzytkownicy record : list) {
             System.out.println(record);
         }
 
@@ -123,6 +148,7 @@ class Main {
         session2.getTransaction().commit();
         session2.close();
     }
+
     private static void doSomethingWithData(Uzytkownicy user) {
         System.out.println(user.getID());
         System.out.println(user.getIMIE());
