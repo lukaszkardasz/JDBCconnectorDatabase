@@ -14,6 +14,9 @@ class Uzytkownicy {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY )
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_uzytkownika")
+        private Zawod zawod;
         @Column
         private int ID;
         @Column
@@ -36,6 +39,7 @@ class Uzytkownicy {
         private int wzrost;
         @Column
         private String KRAJ;
+
 
     @Override
     public String toString() {

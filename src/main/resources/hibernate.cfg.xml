@@ -23,6 +23,7 @@
         <!-- Drop and re-create the database schema on startup -->
 
         <mapping class="hibernate.Uzytkownicy" />
+        <mapping class="hibernate.Zawod" />
 
 
     </session-factory>
