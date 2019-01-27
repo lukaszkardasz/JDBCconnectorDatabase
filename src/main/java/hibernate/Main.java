@@ -11,7 +11,8 @@ class Main {
         //find(5);
         //update(7);
         //delete(16);
-        findAndShowByName();
+        findAndShowByName("Zdzichu");
+        findByNamedQuery("Wiesiek");
 
 
 
@@ -20,13 +21,21 @@ class Main {
 
     }
 
-    private static void findAndShowByName() {
+    private static void findByNamedQuery(String name) {
+        Session session = SessionManager.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.createNamedQuery("selectByName", Uzytkownicy.class);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    private static void findAndShowByName(String name) {
 
         Session session5 = SessionManager.getSessionFactory().openSession();
         session5.beginTransaction();
         String hqlQuery = "select s from Uzytkownicy s where s.IMIE = :IMIE";
         Query<Uzytkownicy> query = session5.createQuery(hqlQuery, Uzytkownicy.class);
-        query.setParameter("IMIE", "Zdzichu");
+        query.setParameter("IMIE", name);
         List<Uzytkownicy> list = query.list();
 
         for(Uzytkownicy record : list){

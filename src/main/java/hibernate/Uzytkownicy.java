@@ -5,6 +5,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "uzytkownicy")
+@NamedQueries({
+        @NamedQuery(name = "selectByName",
+        query = "select s from Uzytkownicy s where s.IMIE = :IMIE") //podajemy query, które kompuluje się tylko raz i można go używać wielokrotnie przez nazwe name
+        })
 
 class Uzytkownicy {
 
