@@ -7,11 +7,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 class Main {
     public static void main(String[] args) {
         //addAndSave();
-        find(5);
+        //find(5);
         //update(7);
         //delete(16);
         //findAndShowByName("Zdzichu");
@@ -20,6 +21,16 @@ class Main {
         //deleteQuery(15);
         //selectByCriteria();
 
+        ZawodRepository repository = new ZawodRepositoryHibernate();
+
+        //List<Zawod> all = repository.findAll();
+        //System.out.println(all);
+
+        Optional<Zawod> byId = repository.findById(2);
+        if (byId.isPresent()){
+            Zawod zawod = byId.get();
+            System.out.println(zawod);
+        }
 
         //zamykanie samoczynne aplikacji
         SessionManager.getSessionFactory().close();
