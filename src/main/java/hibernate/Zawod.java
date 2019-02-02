@@ -16,7 +16,16 @@ class Zawod {
     private String nazwa_zawodu;
     @Column
     private int placa;
+    @Version //adnotacja licząca od zera podwyzszajaca wersję obiektu ktory przetrzymuje, mozna dzieki temu sprawdzić czy mamy lokalnie aktualna wersje danych
+    private Long version;
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
     @Override
     public String toString() {
