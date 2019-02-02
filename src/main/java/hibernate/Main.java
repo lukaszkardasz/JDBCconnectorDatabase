@@ -13,11 +13,11 @@ class Main {
     public static void main(String[] args) {
         //addAndSave();
         //find(5);
-        update(9);
+        //update(9);
         //delete(16);
         //findAndShowByName("Zdzichu");
         //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
-        //updateByName("Bodzio", "Janusz");
+        updateByName("Bodzio", "Janusz");
         //deleteQuery(15);
         //selectByCriteria();
 

@@ -19,9 +19,10 @@ class ZawodRepositoryHibernate implements ZawodRepository {
             transaction = session.beginTransaction();
             //zwracanie wszystkiego z tableli zawod
             Query<Zawod> query = session.createQuery("from Zawod", Zawod.class);
+            List<Zawod> list = query.list();
             transaction.commit();
             transaction = null;
-            return query.list(); //zwracamy listę wszystkich obiektów z tabeli zawod
+            return list; //zwracamy listę wszystkich obiektów z tabeli zawod
         } catch (Exception e) {
             e.printStackTrace();
         } finally { //zabezpieczamy się rollbackiem przed tym jakby coś się nie udało z tranzakcją, wtedy przywracamy ostatnie zmiany rollbackiem
