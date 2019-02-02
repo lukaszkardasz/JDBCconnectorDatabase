@@ -29,6 +29,22 @@ class CarsService {
         for (Cars cars : all) {
             System.out.println(cars);
         }
-
     }
+
+    public void checkName(){
+        Cars s = new Cars();
+        Iterable<Cars> all = carsRepository.findAllByNameEquals("Opel");
+        for (Cars cars : all) {
+            System.out.println(cars);
+        }
+    }
+
+    public void checkNameAndEngine(){
+        Cars s = new Cars();
+        Iterable<Cars> all = carsRepository.findAllByNameEqualsAndTypeEquals("Polonez", "caro");
+        for (Cars cars : all) {
+            System.out.println(cars);
+        }
+    }
+
 }

@@ -13,7 +13,9 @@ class SpringApp {
 
         CarsService p = context.getBean(
                 CarsService.class);
-        p.test();
+        //p.test();
+        //p.checkName();
+        p.checkNameAndEngine();
 
 
 
