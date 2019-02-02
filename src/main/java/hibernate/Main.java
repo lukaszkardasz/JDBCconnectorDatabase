@@ -1,6 +1,11 @@
 package hibernate;
 
 import org.hibernate.Session;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQueryCreator;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -21,14 +26,12 @@ class Main {
         //deleteQuery(15);
         //selectByCriteria();
 
-        ZawodRepository repository = new ZawodRepositoryHibernate();
-        Optional<Zawod> byId = repository.findById(3);
-        if (byId.isPresent()){
-            Zawod zawod = byId.get();
-            System.out.println(zawod);
-            zawod.setNazwa_zawodu("Programista"); //mozna tu uzyc kazdej metody set name get id czy co tam mamy w intefejsie
-            repository.update(zawod);
-        }
+
+        //zeby dzialalo w hibernate cfg trzeba zmienić na update
+        //AuditWithUpdateNazwaZawodu();
+        AuditReaderWithUpdate();
+
+
 
         //List<Zawod> all = repository.findAll();
         //System.out.println(all);
@@ -38,6 +41,43 @@ class Main {
         //zamykanie samoczynne sesji a tym samym programu, że nie trzeba tego robic recznie
         SessionManager.getSessionFactory().close();
 
+    }
+
+    private static void AuditReaderWithUpdate() {
+        Session session = SessionManager.getSessionFactory().openSession();
+        AuditReader auditReader = AuditReaderFactory
+                .get(session);
+
+        Zawod zawod = auditReader.find(Zawod.class, 1, 3);
+        System.out.println(zawod);
+        AuditQueryCreator auditQueryCreator = auditReader.createQuery();
+        List<Object> resultList = auditQueryCreator.forRevisionsOfEntity(
+                Zawod.class,
+                true,
+                true)
+                .add(AuditEntity.property("nazwa_zawodu").eq("Robol"))
+                .add(AuditEntity.revisionType().eq(RevisionType.MOD)) //ADD - to dodane za pierwszym razem, MOD zmodyfikowane tylko szuka, DEL - usunięte
+                .getResultList();
+        for (Object object : resultList) {
+            Zawod zawod1 = (Zawod) object;
+            System.out.println(zawod);
+        }
+    }
+
+    private static void AuditWithUpdateNazwaZawodu() {
+        ZawodRepository repository = new ZawodRepositoryHibernate();
+        Optional<Zawod> byId = repository.findById(4);
+        if (byId.isPresent()){
+            Zawod zawod = byId.get();
+            System.out.println(zawod);
+            zawod.setNazwa_zawodu("Taksówkarz"); //mozna tu uzyc kazdej metody set name get id czy co tam mamy w intefejsie
+            repository.update(zawod);
+        }
+
+        Session session = SessionManager.getSessionFactory().openSession();
+        AuditReader auditReader = AuditReaderFactory.get(session);
+        Zawod zawod = auditReader.find(Zawod.class, 1, 3);
+        System.out.println(zawod);
     }
 
     private static void selectByCriteria() {

@@ -1,6 +1,8 @@
 package hibernate;
 
 
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,6 +15,7 @@ class Zawod {
     @Column
     private int id_zawodu;
     @Column
+    @Audited //przy kazdej modyfikacji tego pola w tabeli audited zostanie stworzony rekord - biblioteka envers
     private String nazwa_zawodu;
     @Column
     private int placa;
