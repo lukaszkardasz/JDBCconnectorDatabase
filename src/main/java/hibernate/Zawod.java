@@ -17,13 +17,13 @@ class Zawod {
     @Column
     private int placa;
     @Version //adnotacja licząca od zera podwyzszajaca wersję obiektu ktory przetrzymuje, mozna dzieki temu sprawdzić czy mamy lokalnie aktualna wersje danych
-    private Long version;
+    private Integer version;
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

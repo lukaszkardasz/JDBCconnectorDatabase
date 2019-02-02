@@ -17,22 +17,25 @@ class Main {
         //delete(16);
         //findAndShowByName("Zdzichu");
         //findByNamedQuery("Franek"); //sluzy tylko do selectów, nie mozna użyc jako named query
-        updateByName("Bodzio", "Janusz");
+        //updateByName("Bodzio", "Janusz");
         //deleteQuery(15);
         //selectByCriteria();
 
         ZawodRepository repository = new ZawodRepositoryHibernate();
+        Optional<Zawod> byId = repository.findById(3);
+        if (byId.isPresent()){
+            Zawod zawod = byId.get();
+            System.out.println(zawod);
+            zawod.setNazwa_zawodu("Programista"); //mozna tu uzyc kazdej metody set name get id czy co tam mamy w intefejsie
+            repository.update(zawod);
+        }
 
         //List<Zawod> all = repository.findAll();
         //System.out.println(all);
 
-        Optional<Zawod> byId = repository.findById(2);
-        if (byId.isPresent()){
-            Zawod zawod = byId.get();
-            System.out.println(zawod);
-        }
 
-        //zamykanie samoczynne aplikacji
+
+        //zamykanie samoczynne sesji a tym samym programu, że nie trzeba tego robic recznie
         SessionManager.getSessionFactory().close();
 
     }
