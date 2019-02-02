@@ -54,7 +54,7 @@ class CarsService {
         System.out.println(s);
     }
 
-    @Transactional
+    @Transactional()
     public void test2() {
         List<Cars> polonez = carsRepository.find("Polonez", "disel 2.0 tdi");
         for (Cars cars : polonez) {
