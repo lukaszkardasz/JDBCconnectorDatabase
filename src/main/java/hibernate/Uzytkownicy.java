@@ -10,7 +10,7 @@ import java.util.Objects;
         query = "select s from Uzytkownicy s where s.IMIE = :IMIE") //podajemy query, które kompuluje się tylko raz i można go używać wielokrotnie przez nazwe name
         })
 
-class Uzytkownicy {
+public class Uzytkownicy {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY )

@@ -11,6 +11,10 @@ class SpringApp {
     ConfigurableApplicationContext context = SpringApplication
             .run(SpringApp.class, args);
 
+        CarsService p = context.getBean(
+                CarsService.class);
+        p.test();
+
 
 
     }
