@@ -32,7 +32,6 @@ class CarsService {
     }
 
     public void checkName(){
-        Cars s = new Cars();
         Iterable<Cars> all = carsRepository.findAllByNameEquals("Opel");
         for (Cars cars : all) {
             System.out.println(cars);
@@ -40,11 +39,16 @@ class CarsService {
     }
 
     public void checkNameAndEngine(){
-        Cars s = new Cars();
         Iterable<Cars> all = carsRepository.findAllByNameEqualsAndTypeEquals("Polonez", "caro");
         for (Cars cars : all) {
             System.out.println(cars);
         }
+    }
+
+    public void checkByEngine(){
+        Cars s = new Cars();
+        s = carsRepository.findFirstByEngine("disel 2.0 tdi"); //szuka jednego - tylko pierwszego
+        System.out.println(s);
     }
 
 }

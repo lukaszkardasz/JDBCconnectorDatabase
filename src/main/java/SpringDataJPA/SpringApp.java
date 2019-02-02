@@ -15,7 +15,8 @@ class SpringApp {
                 CarsService.class);
         //p.test();
         //p.checkName();
-        p.checkNameAndEngine();
+        //p.checkNameAndEngine();
+        p.checkByEngine();
 
 
 
