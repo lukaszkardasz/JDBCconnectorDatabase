@@ -56,6 +56,7 @@ class Main {
                 true,
                 true)
                 .add(AuditEntity.property("nazwa_zawodu").eq("Robol"))
+                .add(AuditEntity.id().eq(1)) //tylko z id = 1 w id_uzytkownika
                 .add(AuditEntity.revisionType().eq(RevisionType.MOD)) //ADD - to dodane za pierwszym razem, MOD zmodyfikowane tylko szuka, DEL - usunięte
                 .getResultList();
         for (Object object : resultList) {
