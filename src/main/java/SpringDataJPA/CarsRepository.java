@@ -15,11 +15,11 @@ public interface CarsRepository extends CrudRepository<Cars, Long> {
     Cars findFirstByEngine(String engine);
     List<Cars> findAllByNameEquals(String name);
 
-    @Query("from Cars where name = ?1 and engine =?2")
+    @Query("select c from Cars c where c.name = ?1 and c.engine =?2")
     List<Cars> find(String name, String engine);
 
-    @Query ("from Cars where name = :name and engine = :engine")
-    List<Cars> find2(@Param("name")String name, @Param("engine")String engine);
+    @Query ("from Cars where name = :name1 and engine = :engine1")
+    List<Cars> find2(@Param("name1")String name, @Param("engine1")String engine);
 
 
 }

@@ -2,7 +2,9 @@ package SpringDataJPA;
 
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 class CarsService {
@@ -12,6 +14,7 @@ class CarsService {
         this.carsRepository = carsRepository;
     }
 
+    @Transactional
     public void test() {
         Cars s = new Cars();
         s.setName("Polonez");
@@ -31,24 +34,32 @@ class CarsService {
         }
     }
 
-    public void checkName(){
+    public void checkName() {
         Iterable<Cars> all = carsRepository.findAllByNameEquals("Opel");
         for (Cars cars : all) {
             System.out.println(cars);
         }
     }
 
-    public void checkNameAndEngine(){
+    public void checkNameAndEngine() {
         Iterable<Cars> all = carsRepository.findAllByNameEqualsAndTypeEquals("Polonez", "caro");
         for (Cars cars : all) {
             System.out.println(cars);
         }
     }
 
-    public void checkByEngine(){
+    public void checkByEngine() {
         Cars s = new Cars();
         s = carsRepository.findFirstByEngine("disel 2.0 tdi"); //szuka jednego - tylko pierwszego
         System.out.println(s);
+    }
+
+    @Transactional
+    public void test2() {
+        List<Cars> polonez = carsRepository.find("Polonez", "disel 2.0 tdi");
+        for (Cars cars : polonez) {
+            System.out.println(cars);
+        }
     }
 
 }

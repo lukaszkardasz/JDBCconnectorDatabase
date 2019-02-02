@@ -17,6 +17,8 @@ class SpringApp {
         //p.checkName();
         //p.checkNameAndEngine();
         p.checkByEngine();
+        p.test();
+        p.test2();
 
 
 
